@@ -14,11 +14,11 @@ def score2(P1_NAME, P1_ATTEMPTS, P2_NAME, P2_ATTEMPTS):
     c = F.read()
     if c == "" or c == "No Record":
         q = open("score2.txt", "w")
-        q.write(f"[[{P1_NAME},{P1_SCORE}],[{P2_NAME},{P2_SCORE}]],")
+        q.write(f"['{P1_NAME}','{P1_SCORE}'],['{P2_NAME}','{P2_SCORE}']\n")
         q.close()
     else:
         q = open("score2.txt", "a")
-        q.write(f"[[{P1_NAME},{P1_SCORE}],[{P2_NAME},{P2_SCORE}]],")
+        q.write(f"['{P1_NAME}','{P1_SCORE}'],['{P2_NAME}','{P2_SCORE}']\n")
         q.close()
     F.close()
 
@@ -215,14 +215,21 @@ def main():
                 
             elif u == '2':
                 f = open("score2.txt", "r")
-                content = f.read().split(",")[:-1]
+                content = f.read().split("\n")[:-1]
                 if content:
-                    pass
+                    for abc in range(len(content)):
+                        content[abc] = (eval(content[abc]))
+                    
+                    for rec in content:
+                        print(f"{rec[0][0]}-->{rec[0][1]} and {rec[1][0]}-->{rec[1][1]}")
+
+                else:
+                    print("No Record")
+                f.close()
+                
             else:
                 print("Wrong Input...")
                 break
-
-            
 
         elif choice == "3":
             f = open("score.txt", "r")
