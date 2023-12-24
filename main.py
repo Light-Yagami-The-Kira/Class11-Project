@@ -197,7 +197,7 @@ def main():
                 double_player_game()
             else:
                 print("Wrong Input...")
-                break
+                continue
 
         elif choice == "2":
 
@@ -229,15 +229,60 @@ def main():
                 
             else:
                 print("Wrong Input...")
-                break
+                continue
 
         elif choice == "3":
-            f = open("score.txt", "r")
-            print(max(f.read().split(',')))
-            f.close()
+            u = input("1. Single Player\n2. Multiplayer")
+            if u == '1':
+                f = open("score.txt", "r")
+                content = f.read().split(';')[:-1]
+                if content:
+                    for abcd in range(len(content)):
+                        content[abcd] = eval(content[abcd])
+                        content[abcd][0],content[abcd][1] = content[abcd][1],content[abcd][0]   
+                    print(max(content)[1], "---->", max(content)[0])
+                else:
+                    print("No Record")
+                f.close()
+                
+            elif u == '2':
+                f = open("score2.txt", "r")
+                content = f.read().split("\n")[:-1]
+                if content:
+                    for abc in range(len(content)):
+                        content[abc] = (eval(content[abc]))
+                
+                    individual_player_list = []
+
+                    for player1, player2 in content:
+
+                        individual_player_list.append(player1[::-1])
+                        individual_player_list.append(player2[::-1])
+
+                    print(max(individual_player_list)[1], "--->", max(individual_player_list)[0])
+
+                else:
+                    print("No Record")
+                f.close()
+                
+            else:
+                print("Wrong Input...")
+                continue
+
 
         elif choice == "4":
-            f = open('score.txt', 'w')
+            file = None
+            U = input("1. Single Player Score 2. Multiplayer Score")
+
+            if U == '1':
+                file = 'score.txt'
+            elif U == '2':
+                file = 'score2.txt'
+            else:
+                print("Wrong Input")
+                continue
+
+            f = open(file, 'w')
             f.write("No Record")
             f.close()
             print("Score Reset Completed")
@@ -246,7 +291,7 @@ def main():
             print("Thanks for playing. Goodbye!")
             break
         else:
-            print("Invalid choice. Please enter 1, 2, or 3.")
+            print("Invalid choice...")
         
 
 if __name__ == "__main__":
